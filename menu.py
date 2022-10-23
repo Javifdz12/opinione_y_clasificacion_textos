@@ -3,6 +3,9 @@ import helpers
 import os
 
 def iniciar():
+
+    tweets = determina_opinion('datas\calentamientoClimatico.csv')
+    tweets.preparacion()
     while True:
 
         os.system('clear')
@@ -18,8 +21,7 @@ def iniciar():
         opcion = input("> ")
 
         helpers.limpiar_pantalla()
-        tweets = determina_opinion('datas\calentamientoClimatico.csv')
-        tweets.preparacion()
+
 
         if opcion == 1:
             while True:
