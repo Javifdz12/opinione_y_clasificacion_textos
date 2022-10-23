@@ -1,9 +1,9 @@
-import pandas as pnd
+import re
+import pandas as pd
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
 from nltk.stem import WordNetLemmatizer
-import re
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer
@@ -15,21 +15,19 @@ from sklearn.model_selection import GridSearchCV
 
 
 class determina_opinion:
-    def __init__(self,dataset):
-        self.dataset=dataset
-        self.frase = "Why should trust scientists with global warming if they didnt know Pluto wasnt a planet"
+    def __init__(self, dataset_name):
+        self.mensajesTwitter = pd.read_csv(dataset_name, delimiter = ";")
 
     def cargar_archivo(self):
-        self.mensajesTwitter = pnd.read_csv(self.dataset, delimiter=";")
+        '''Generamos nuevas propiedades a la clase que no están en el constructor:
+                - Stopwords: Estas son palabras que no tienen relevancia en el lenguaje
+                - Stemmer: 
+        '''
         nltk.download('stopwords')
         nltk.download('wordnet')
         self.stopWords = stopwords.words('english')
         self.stemmer = SnowballStemmer('english')
         self.lemmatizer = WordNetLemmatizer()
-
-    def inf(self):
-        print(self.mensajesTwitter.shape)
-        print(self.mensajesTwitter.head(2))
 
 
     def normalizacion(self):
@@ -42,7 +40,7 @@ class determina_opinion:
             mensaje.strip()
         print(self.mensajesTwitter.head(10))
 
-    def normalizacion_frase(mensaje):
+    def normalizacion_frase(self, mensaje):
         mensaje = re.sub('((www\.[^\s]+)|(https?://[^\s]+))','URL', mensaje)
         mensaje = re.sub('@[^\s]+','USER', mensaje)
         mensaje = mensaje.lower().replace("ё", "е")
@@ -64,7 +62,7 @@ class determina_opinion:
 
     def preparacion(self):
         self.cargar_archivo()
-        self.inf()
+        print(determina_opinion)
         self.transformar_columna('CREENCIA')
         self.normalizacion()
         self.eliminar_stopwords()
@@ -79,9 +77,7 @@ class determina_opinion:
         self.modelo = self.etapas_aprendizaje.fit(self.X_train,self.y_train)
         print(classification_report(self.y_test, self.modelo.predict(self.X_test), digits=4))
 
-    def predecir_frase(self):
-        print(self.frase)
-
+    def predecir_frase(self, frase):
         #Normalización
         frase = self.normalizacion_frase(frase)
 
@@ -127,8 +123,13 @@ class determina_opinion:
         modelo = etapas_aprendizaje.fit(self.X_train,self.y_train)
         print(classification_report(self.y_test, modelo.predict(self.X_test), digits=4))
 
+    def __str__(self):
+        print('Nuestro dataset:\n')
+        print(self.mensajesTwitter.head(10))
+        return f'Tiene un tamaño de {self.mensajesTwitter.shape[0]}'
 
 
-op=determina_opinion('calentamientoClimatico.csv')
+
+op=determina_opinion('datas\calentamientoClimatico.csv')
 op.preparacion()
 op.Aprendizaje_multinomial()
