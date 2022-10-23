@@ -17,6 +17,7 @@ from sklearn.model_selection import GridSearchCV
 class determina_opinion:
     def __init__(self,dataset):
         self.dataset=dataset
+        self.frase = "Why should trust scientists with global warming if they didnt know Pluto wasnt a planet"
 
     def cargar_archivo(self):
         self.mensajesTwitter = pnd.read_csv(self.dataset, delimiter=";")
@@ -79,7 +80,6 @@ class determina_opinion:
         print(classification_report(self.y_test, self.modelo.predict(self.X_test), digits=4))
 
     def predecir_frase(self):
-        self.frase = "Why should trust scientists with global warming if they didnt know Pluto wasnt a planet"
         print(self.frase)
 
         #Normalización
@@ -131,3 +131,4 @@ class determina_opinion:
 
 op=determina_opinion('calentamientoClimatico.csv')
 op.preparacion()
+op.Aprendizaje_multinomial()
