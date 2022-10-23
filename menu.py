@@ -1,14 +1,15 @@
-from DeterminarOpinion import *
+import DeterminarOpinion as dt
 import helpers
 import os
 
 def iniciar():
 
-    tweets = determina_opinion('datas\calentamientoClimatico.csv')
+    tweets = dt.determina_opinion('datas\calentamientoClimatico.csv')
     tweets.preparacion()
+
     while True:
 
-        os.system('clear')
+         # os.system('cls')
         print("========================")
         print(" BIENVENIDO AL Manager ")
         print("========================")
@@ -20,7 +21,7 @@ def iniciar():
 
         opcion = input("> ")
 
-        helpers.limpiar_pantalla()
+        # helpers.limpiar_pantalla()
 
 
         if opcion == 1:
@@ -33,7 +34,7 @@ def iniciar():
                 print("========================")
 
                 opcion_1 = input("> ")
-                helpers.limpiar_pantalla()
+                # helpers.limpiar_pantalla()
 
                 if opcion_1 == 1:
                     print('Introduce una frase(en inglés)')
