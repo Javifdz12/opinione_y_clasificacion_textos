@@ -128,8 +128,3 @@ class determina_opinion:
         print(self.mensajesTwitter.head(10))
         return f'Tiene un tamaño de {self.mensajesTwitter.shape[0]}'
 
-
-
-op=determina_opinion('datas\calentamientoClimatico.csv')
-op.preparacion()
-op.Aprendizaje_multinomial()
