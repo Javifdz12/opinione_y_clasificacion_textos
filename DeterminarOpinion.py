@@ -62,7 +62,7 @@ class determina_opinion:
 
     def preparacion(self):
         self.cargar_archivo()
-        # print(determina_opinion)
+        print(determina_opinion)
         self.transformar_columna('CREENCIA')
         self.normalizacion()
         self.eliminar_stopwords()
